@@ -4,9 +4,9 @@
 
 # How to run
 
-1. Navigate to the jar file located at out/artifacts/todo_list_1_0_jar
+1. Navigate to the jar file located at build/libs
 
-2. Go to terminal and enter java -jar TodoList.jar
+2. Go to terminal and enter java -jar todo-list-1.0.jar
 
 # How to use
 
