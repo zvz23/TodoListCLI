@@ -19,8 +19,15 @@ public class Main {
         System.out.println("//enter help to show options");
         boolean todoLoop = true;
         while(todoLoop){
-            System.out.print("> ");
-            String command = scan.nextLine();
+            Pattern tempPattern = Pattern.compile("\\s*(?<command>\\w+)\\s*");
+            String command = " ";
+            while(!tempPattern.matcher(command).matches()){
+                System.out.print("> ");
+                command = scan.nextLine();
+            }
+            Matcher tempMatcher = tempPattern.matcher(command);
+            tempMatcher.matches();
+            command = tempMatcher.group("command");
             switch(command){
                 case "add":
                     String toAdd = " ";
@@ -37,19 +44,15 @@ public class Main {
 
                     break;
                 case "edit":
-                    System.out.print("Enter id to edit: ");
                     try{
-                        int tempId = scan.nextInt();
-                        scan.nextLine();
+                        int tempId = validateInt("Enter id to edit: ", "Invalid id");
                         if(todo.hasId(tempId)){
                             System.out.println("What do you want to edit?");
                             System.out.println("1. edit text");
                             System.out.println("2. toggle check/uncheck");
-                            System.out.print("Enter option: ");
-                            int option = 0;
+                            System.out.println("3. exit");
                             try{
-                                option = scan.nextInt();
-                                scan.nextLine();
+                                int option = validateInt("Enter option: ", "Invalid option");
                                 switch(option){
                                     case 1:
                                         System.out.print("Enter text to change: ");
@@ -74,6 +77,8 @@ public class Main {
                                         else{
                                             System.out.println("Failed to toggle");
                                         }
+                                        break;
+                                    case 3:
                                         break;
                                     default:
                                         System.out.println("Invalid option");
@@ -121,6 +126,26 @@ public class Main {
         }
 
     }
+
+    private static int validateInt(String text, String errText){
+        Scanner scan = new Scanner(System.in);
+        int tempId = 0;
+        boolean notValidInt = true;
+        while(notValidInt){
+            try{
+                System.out.print(text);
+                tempId = scan.nextInt();
+                notValidInt = false;
+            }catch (InputMismatchException e){
+                System.out.println(errText);
+            }
+            finally{
+                scan.nextLine();
+            }
+        }
+        return tempId;
+    }
+
     private static void showHelp(){
         System.out.println("add - add an item");
         System.out.println("edit - edit a specific item");
