@@ -10,9 +10,9 @@ import java.util.stream.Collectors;
 import encryptionpack.*;
 
 public class TodoListCLI implements TodoList{
-    private static Map<Integer, ToDo> dataMap = new Hashtable<>();
-    private static List<ToDo> todoList = new ArrayList<>();
-    private static String dataFile = "./data.txt";
+    private Map<Integer, ToDo> dataMap = new Hashtable<>();
+    private List<ToDo> todoList = new ArrayList<>();
+    private String dataFile = "./data.txt";
     private boolean changed = false;
     private Encryption encryption;
     public TodoListCLI(){
@@ -89,10 +89,10 @@ public class TodoListCLI implements TodoList{
             System.out.println(keys+". "+tempToDo.getTitle() + " || " + tempCheck);
         }
     }
-    private static void loadData(){
+    private void loadData(){
         dataMap.clear();
         todoList.clear();
-        final String regex = "\\s*\\[(?<title>.*)\\]\\s{1}(?<check>\\w+)\\s*";
+        final String regex = "\\s*\\[(?<title>.*)\\]\\s(?<check>\\w+)\\s*";
         Pattern pattern = Pattern.compile(regex);
         File file = new File(dataFile);
         int count = 1;
@@ -103,7 +103,7 @@ public class TodoListCLI implements TodoList{
                 String line = scan.nextLine();
                 Matcher matcher = pattern.matcher(line);
                 if(matcher.matches()){
-                    ToDo tempToDo = new ToDo(matcher.group("title"));
+                    ToDo tempToDo = new ToDo(encryption.decrypt(matcher.group("title"), 5));
                     if(matcher.group("check").equals("true")){
                         tempToDo.check();
                     }
@@ -135,7 +135,7 @@ public class TodoListCLI implements TodoList{
             try{
                 writer = new FileWriter(dataFile, false);
                 for(ToDo todo : todoList){
-                    String encrpyedTitle = encryption.encrypt(todo.getTitle(), 100);
+                    String encrpyedTitle = encryption.encrypt(todo.getTitle(), 5);
                     writer.write("["+encrpyedTitle+"] "+ todo.isChecked());
                     writer.write("\n");
                 }
