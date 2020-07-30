@@ -98,19 +98,18 @@ public class Main {
                     }
                     break;
                 case "remove":
-                    System.out.print("Enter the id to remove: ");
-                    int tempId = scan.nextInt();
-                    scan.nextLine();
+                    int tempId = validateInt("Enter id to remove: ", "Invalid id");
                     boolean removed = todo.remove(tempId);
                     if(removed){
                         System.out.println("Item successfully removed");
                     }
                     else{
-                        System.out.println("Failed to remove the item");
+                        System.out.println("Id not found");
                     }
                     break;
                 case "list":
                     todo.showList();
+                    System.out.println();
                     break;
                 case "help":
                     showHelp();

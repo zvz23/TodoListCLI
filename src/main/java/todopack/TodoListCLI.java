@@ -114,7 +114,6 @@ public class TodoListCLI implements TodoList{
                     dataMap.put(count++, tempToDo);
                 }
             }
-            System.out.println("Data file successfully loaded.");
         }
         catch (FileNotFoundException e){
             System.out.println("Note: no data file found, create a new one by adding an item in the list");
