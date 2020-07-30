@@ -142,7 +142,6 @@ public class TodoListCLI implements TodoList{
                 writer.close();
             }catch (IOException e){
                 throw new IllegalArgumentException("There was an error");
-            }finally {
             }
 
         }
