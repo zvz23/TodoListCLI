@@ -12,7 +12,7 @@ import encryptionpack.*;
 public class TodoListCLI implements TodoList{
     private Map<Integer, ToDo> dataMap = new Hashtable<>();
     private List<ToDo> todoList = new ArrayList<>();
-    private String dataFile = "./data.txt";
+    private String dataFile = "./data.dat";
     private boolean changed = false;
     private Encryption encryption;
     public TodoListCLI(){
